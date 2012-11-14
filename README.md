@@ -207,7 +207,7 @@ On successful DB.init the success function is called with an argument of DBObjec
 ###insert (<object> options)###
 Insert data into objectStore
 
-######arguments######
+######options######
 
 * store: `<string>` objectStore name [required],
 * data: `<array>` array of objects that you want to insert - not required, but pointless to leave out...
@@ -232,7 +232,7 @@ Insert data into objectStore
 ###get (<object> options)###
 Get one record from objectStore by it's key
 
-######arguments######
+######options######
 
 * store: `<string>` objectStore name [required],
 * id: `<mixed>` the id* of the row you are trying to retrieve, (*id as set by keyPath in schema) [required]
@@ -254,7 +254,7 @@ Get one record from objectStore by it's key
 ###all (<object> options)###
 Get all records from objectStore
 
-######arguments######
+######options######
 
 * store: `<string>` objectStore name [required]
 * success: `<function>` [see below for arguments]
@@ -274,7 +274,7 @@ Get all records from objectStore
 ###delete (<object> options)###
 Delete one record from objectStore
 
-######arguments######
+######options######
 
 * store: `<string>` objectStore name [required],
 * id: `<mixed>` the key you are trying to delete, can be `<int>` or `<string>` [required]
@@ -295,7 +295,7 @@ Delete one record from objectStore
 ###filter (<object> options)###
 Filter records in an objectStore by an index/value and optional ordering by arbitrary column/limiting
 
-######arguments######
+######options######
 
 * store: `<string>` objectStore name [required],
 * key: `<string>` index you want to filter by, must be set up in the schema [required],
@@ -320,7 +320,7 @@ Filter records in an objectStore by an index/value and optional ordering by arbi
 ###clear (<object> options)###
 Delete all rows from an objectStore
 
-######arguments######
+######options######
 
 * store: `<string>` objectStore name [required]
 * success: `<function>` [see below for arguments]
@@ -339,7 +339,7 @@ Delete all rows from an objectStore
 ###count (<object> options)###
 Count total records in an objectStore, with optional filtering for an index/value*
 
-######arguments######
+######options######
 
 * store: `<string>` objectStore name [required],
 * key: `<string>` index to filter count to [optional]
