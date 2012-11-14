@@ -51,7 +51,7 @@ function DB ($options) {
     };
     
     __log = function ($msg) {
-        if (debug && console && console.log) {  console.log($msg);  }
+        if (_debug && console && console.log) {  console.log($msg);  }
     };
     
     __getTransaction = function ($db, $store, $rw) {
@@ -191,6 +191,7 @@ function DB ($options) {
             try {
                 request = ($repl) ? objectStore.put($row) : objectStore.add($row);
             } catch ($err) {
+                __log($err.message);
                 failed.push($row);
                 checkDone({});
             }
