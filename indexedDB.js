@@ -100,9 +100,9 @@ function DB ($options){
     // request on upgrade
     _dbRequest.onupgradeneeded = function ($e) {
         var updb = $e.target.result,
-                objectStore,
-                item,
-                index;
+            objectStore,
+            item,
+            index;
         for (var i = 0, ii = _schema.length; i < ii; i++) {
             item = _schema[i];
             objectStore = updb.createObjectStore(item.name, item.key);
