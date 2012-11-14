@@ -76,7 +76,7 @@ Delete record with id = 7
 
     db.delete({
         store: 'animals', 
-        id: 7, // value of column that is the store's keyPath from the schema
+        id: 7, // value of column that is the store's key from the schema
         success: function (deletedID, objectStore, successEvent) { /* deleted */ },
         error: function (objectStore, failEvent) { /* error */ }
     });
@@ -97,7 +97,7 @@ Get record with id = 5
 
     db.get({
         store: 'animals', 
-        id: 5, // value of column that is the store's keyPath from the schema
+        id: 5, // value of column that is the store's key from the schema
         success: function (data, objectStore, successEvent) { /* {id: 5, name: 'whale', class: 'mammalia'} */ },
         error: function (objectStore, failEvent) { /* error */ }
     });
