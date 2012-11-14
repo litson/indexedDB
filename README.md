@@ -136,6 +136,14 @@ OptionalKey will constrain result to items matching that key at value optionalKe
         success: function (count, successEvent) { /* total number of records */ },
         error: function (failEvent) { /* error */ }
     });
+    
+    db.count({
+        store: 'animals',
+        key: 'class',
+        value: 'mammilia',
+        success: function (count, successEvent) { /* total number of records with class 'mammilia' */ },
+        error: function (failEvent) { /* error */ }
+    });
 
 
 Documentation
