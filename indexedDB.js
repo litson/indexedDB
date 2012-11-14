@@ -179,32 +179,24 @@ function DB ($options) {
             failed = [],
             insert,
             checkDone;
-        __assert(trans, 'Error inserting to ' + $store);
+        __assert(trans, 'Could not get Transaction inserting to ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get object store ' + $store);
+        __assert(objectStore, 'Could not get objectStore inserting to ' + $store);
         checkDone = function ($e) {
                 if ((added.length + failed.length) === ii) {
                 __call($opts.error, _self, [added, failed, $e]);
             }
         };
         insert = function ($row) {
-            try {
-                request = ($repl) ? objectStore.put($row) : objectStore.add($row);
-            } catch ($err) {
-                __log($err.message);
+            request = ($repl) ? objectStore.put($row) : objectStore.add($row);
+            request.onsuccess = function ($e) { 
+                added.push($row);
+                checkDone($e);
+            };
+            request.onerror = function ($e) { 
                 failed.push($row);
-                checkDone({});
-            }
-            if (request) {
-                request.onsuccess = function ($e) { 
-                    added.push($row);
-                    checkDone($e);
-                };
-                request.onerror = function ($e) { 
-                    failed.push($row);
-                    checkDone($e);
-                };
-            }
+                checkDone($e);
+            };
         };
         for (var i = 0, ii = $data.length; i < ii; i++) {
             insert($data[i]);
@@ -226,9 +218,9 @@ function DB ($options) {
             trans = __getTransaction(this.db, $store, true),
             objectStore,
             request;
-        __assert(trans, 'Error deleting ' + $id + ' from ' + $store);
+        __assert(trans, 'Could not get Transaction deleting ' + $id + ' from ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get object store ' + $store);
+        __assert(objectStore, 'Could not get objectStore deleting ' + $id + ' from ' + $store);
         request = objectStore.delete($id);
         request.onsuccess = function ($e) {
             __call($opts.success, _self, [$id, $e]);
@@ -253,9 +245,9 @@ function DB ($options) {
             trans = __getTransaction(this.db, $store),
             objectStore,
             request;
-        __assert(trans, 'Error getting ' + $id + ' from ' + $store);
+        __assert(trans, 'Could not get Transaction getting ' + $id + ' from ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get object store ' + $store);
+        __assert(objectStore, 'Could not get objectStore getting ' + $id + ' from ' + $store);
         request = objectStore.get($id);
         request.onsuccess = function ($e) {
             __call($opts.success, _self, [request.result, $store, $e]);
@@ -280,9 +272,9 @@ function DB ($options) {
             request,
             cursor,
             data = [];
-        __assert(trans, 'Error getting all from ' + $store);
+        __assert(trans, 'Could not get Transaction getting all from ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get object store ' + $store);
+        __assert(objectStore, 'Could not get objectStore getting all from ' + $store);
         request = objectStore.openCursor();
         request.onsuccess = function ($e) {
             cursor = $e.target.result;
@@ -325,9 +317,9 @@ function DB ($options) {
             keyRange,
             cursor,
             data = [];
-        __assert(trans, 'Error filtering ' + $key + ' for ' + $value + ' from ' + $store);
+        __assert(trans, 'Could not get Transaction filtering ' + $key + ' for ' + $value + ' from ' + $store);
         objectStore = trans.objectStore(store);
-        __assert(objectStore, 'Could not get object store ' + $store);
+        __assert(objectStore, 'Could not get objectStore filtering ' + $key + ' for ' + $value + ' from ' + $store);
         index = objectStore.index($key);
         keyRange = IDBKeyRange.only($value);
         request = index.openCursor(keyRange);
@@ -371,9 +363,9 @@ function DB ($options) {
             trans = __getTransaction(this.db, $store, true),
             objectStore,
             request;
-        __assert(trans, 'Error clearing ' + $store);
+        __assert(trans, 'Could not get Transaction clearing ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get object store ' + $store);
+        __assert(objectStore, 'Could not get objectStore clearing ' + $store);
         request = objectStore.clear();
         request.onsuccess = function ($e) {
             __call($opts.success, _self, [$store, $e]);
@@ -403,9 +395,9 @@ function DB ($options) {
             count = 0,
             index,
             keyRange;
-        __assert(trans, 'Error counting ' + $store);
+        __assert(trans, 'Could not get Transaction counting ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get object store ' + $store);
+        __assert(objectStore, 'Could not get objectStore counting ' + $store);
         if ($key && $value) {
             index = objectStore.index($key);
             keyRange = IDBKeyRange.only($value);
