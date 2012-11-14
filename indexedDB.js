@@ -10,27 +10,27 @@
  */
 function DB ($options){
     var self = this,
-            // private polyfils
+        // private polyfils
         indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB,
         IDBDatabase = window.IDBDatabase || window.webkitIDBDatabase,
-            IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.mozIDBKeyRange,
-            IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction,
-            // private properties
-            _readWrite = IDBTransaction.readwrite || 'readwrite',
-            _dbRequest,
-            _dbName,
-            _version,
-            _schema,
-            _debug,
-            // private methods
-            __call,
-            __isArray,
-            __log,
+        IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.mozIDBKeyRange,
+        IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction,
+        // private properties
+        _readWrite = IDBTransaction.readwrite || 'readwrite',
+        _dbRequest,
+        _dbName,
+        _version,
+        _schema,
+        _debug,
+        // private methods
+        __call,
+        __isArray,
+        __log,
         __getTransaction,
         __assert,
         // class
-            DBObject,
-            // exception
+        DBObject,
+        // exception
         IndexedDBException;
 
     // Exception
@@ -83,6 +83,7 @@ function DB ($options){
     __assert(_version, 'Invalid parameter: version <int>');
     __assert(__isArray(_schema), 'Invalid parameter: schema <array>');
     
+    // check support
     if (!indexedDB) {
         __call($options.error, self, [false, $e]);
         return false;
@@ -122,10 +123,10 @@ function DB ($options){
         var idb = _dbRequest.result,
             db = new DBObject(idb);
         if (_version !== idb.version) {
-              var setVersionRequest = idb.setVersion(_version);
-              setVersionRequest.onerror = function ($e) {
+            var setVersionRequest = idb.setVersion(_version);
+            setVersionRequest.onerror = function ($e) {
                 __call($options.upgradeError, self, [$e]);
-              };
+            };
             setVersionRequest.onsuccess = function ($e) {
                 var objectStore,
                     item,
@@ -222,8 +223,8 @@ function DB ($options){
             $store = $opts.store,
             $id = $opts.id,
             trans = __getTransaction(this.db, $store, true),
-                objectStore,
-                request;
+            objectStore,
+            request;
         __assert(trans, 'Error deleting ' + $id + ' from ' + $store);
         objectStore = trans.objectStore($store);
         __assert(objectStore, 'Could not get object store ' + $store);
@@ -249,8 +250,8 @@ function DB ($options){
             $store = $opts.store,
             $id = $opts.id,
             trans = __getTransaction(this.db, $store),
-                objectStore,
-                request;
+            objectStore,
+            request;
         __assert(trans, 'Error getting ' + $id + ' from ' + $store);
         objectStore = trans.objectStore($store);
         __assert(objectStore, 'Could not get object store ' + $store);
@@ -274,10 +275,10 @@ function DB ($options){
         var _self = this,
             $store = $opts.store,
             trans = __getTransaction(this.db, $store),
-                objectStore,
-                request,
-                cursor,
-                data = [];
+            objectStore,
+            request,
+            cursor,
+            data = [];
         __assert(trans, 'Error getting all from ' + $store);
         objectStore = trans.objectStore($store);
         __assert(objectStore, 'Could not get object store ' + $store);
@@ -367,8 +368,8 @@ function DB ($options){
         var _self = this,
             $store = $opts.store,
             trans = __getTransaction(this.db, $store, true),
-                objectStore,
-                request;
+            objectStore,
+            request;
         __assert(trans, 'Error clearing ' + $store);
         objectStore = trans.objectStore($store);
         __assert(objectStore, 'Could not get object store ' + $store);
@@ -396,11 +397,11 @@ function DB ($options){
             $key = $opts.key,
             $value = $opts.value,
             trans = __getTransaction(this.db, $store, true),
-                objectStore,
-                request,
-                count = 0,
-                index,
-                keyRange;
+            objectStore,
+            request,
+            count = 0,
+            index,
+            keyRange;
         __assert(trans, 'Error counting ' + $store);
         objectStore = trans.objectStore($store);
         __assert(objectStore, 'Could not get object store ' + $store);
