@@ -123,7 +123,7 @@ Get all animals from class 'mammilia' in ascending order (column of ordering is 
         orderCol: 'name', 
         order: 'asc', 
         limit: 3,
-        success: function (data, objectStore, successEvent) { /* first 3 animal with class mammilia in asc order by name */ },
+        success: function (data, objectStore, successEvent) { /* first 3 with class mammilia in asc order by name */ },
         error: function (objectStore, failEvent) { /* error */ }
     });
 
