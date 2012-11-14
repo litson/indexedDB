@@ -16,9 +16,7 @@ See full example at the bottom
 
     var dbSchema = [{
         name: 'animals',
-        key: {
-            keyPath: 'id'
-        },
+        key: 'id',
         indexes: [{
             name: 'class',
             field: 'class',
@@ -72,13 +70,13 @@ See full example at the bottom
 
 ###Deleting###
 
-####Delete by keypath (id in this example)####
+####Delete by id####
 
 Delete record with id = 7
 
     db.delete({
         store: 'animals', 
-        id: 7,
+        id: 7, // value of column that is the store's keyPath from the schema
         success: function (deletedID, objectStore, successEvent) { /* deleted */ },
         error: function (objectStore, failEvent) { /* error */ }
     });
@@ -93,13 +91,13 @@ Delete record with id = 7
 
 ###Fetching###
 
-####Get record by keypath (id in this example)####
+####Get record by id####
 
 Get record with id = 5
 
     db.get({
         store: 'animals', 
-        id: 5,
+        id: 5, // value of column that is the store's keyPath from the schema
         success: function (data, objectStore, successEvent) { /* {id: 5, name: 'whale', class: 'mammalia'} */ },
         error: function (objectStore, failEvent) { /* error */ }
     });
@@ -365,7 +363,7 @@ Full Example
     // schema
     var dbSchema = [{
         name: 'animals',
-        key: { keyPath: 'id'},
+        key: 'id',
         indexes: [
             { name: 'class', field: 'class', unique: false }
         ]

@@ -105,7 +105,7 @@ function DB ($options) {
             index;
         for (var i = 0, ii = _schema.length; i < ii; i++) {
             item = _schema[i];
-            objectStore = updb.createObjectStore(item.name, item.key);
+            objectStore = updb.createObjectStore(item.name, {keyPath: item.key});
             if (__isArray(item.indexes)) {
                 for (var j = 0, jj = item.indexes.length; j < jj; j++) {
                     index = item.indexes[j];
@@ -134,13 +134,17 @@ function DB ($options) {
                     index;
                 for (var i = 0, ii = schema.length; i < ii; i++) {
                     item = schema[i];
-                    objectStore = idb.createObjectStore(item.name, item.key);
+                    try {
+                        objectStore = idb.createObjectStore(item.name, {keyPath: item.key});
+                    } catch ($err) { __log($err.message); }
                     if (__isArray(item.indexes)) {
                         for (var j = 0, jj = item.indexes.length; j < jj; j++) {
                             index = item.indexes[j];
-                            objectStore.createIndex(index.name, index.field, { 
-                                unique:  !!(index.unique)
-                            });
+                            try {
+                                objectStore.createIndex(index.name, index.field, { 
+                                    unique:  !!(index.unique)
+                                });
+                            } catch ($err) { __log($err.message): }
                         }
                         __call($options.upgrade, self, [$e]);
                     }
