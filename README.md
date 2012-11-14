@@ -3,8 +3,6 @@ indexedDB
 
 A wrapper for javascript's indexedDB
 
-    TODO: clean up & optimize code
-
     Tested in: Chrome 21
                Firefox 14
                IE 10 / Windows 8 metro app js
