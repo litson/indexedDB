@@ -179,18 +179,12 @@ The schema takes an array of objects. Each object represents an objectStore.
 
 Each objectStoreObject has 3 properties:
 
-    name: <string> the name you will reference the objectStore by when requesting data
-    
-    key: <object> an object describing the key. Properties: 
-                  
-        keyPath: <string> the objectStore's key
-        autoIncrement: <bool> if key auto increments (default false)
-        
-    indexes: <array> an array of objects that will be indexes in your objectStore. 
-                     Each object has 3 properties:
-        name: <string> the name of your index
-        field: <string> the actual field name in your object 
-        unique: <bool> whether it is a unique index (default false)
+* name: `<string>` the name you will reference the objectStore by when requesting data
+* key: `<string>` the objectStore's key
+* indexes: `<array>` an array of objects that will be indexes in your objectStore. Each object has 3 properties:
+        name: `<string>` the name of your index
+        field: `<string>` the actual field name in your object 
+        unique: `<bool>` whether it is a unique index (default false)
 
 ##DBObject##
 
