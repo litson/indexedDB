@@ -182,6 +182,7 @@ Each objectStoreObject has 3 properties:
 * name: `<string>` the name you will reference the objectStore by when requesting data
 * key: `<string>` the objectStore's key
 * indexes: `<array>` an array of objects that will be indexes in your objectStore. Each object has 3 properties:
+
         name: `<string>` the name of your index
         field: `<string>` the actual field name in your object 
         unique: `<bool>` whether it is a unique index (default false)
