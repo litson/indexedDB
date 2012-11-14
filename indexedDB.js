@@ -122,6 +122,7 @@ function DB ($options) {
     _dbRequest.onsuccess = function ($e) {
         var idb = _dbRequest.result,
             db = new DBObject(idb);
+        // some browsers do upgrading db here
         if (_version !== idb.version) {
             var setVersionRequest = idb.setVersion(_version);
             setVersionRequest.onerror = function ($e) {
@@ -181,9 +182,9 @@ function DB ($options) {
             checkDone;
         __assert(trans, 'Could not get Transaction inserting to ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get objectStore inserting to ' + $store);
+        __assert(objectStore, 'Could not get ObjectStore inserting to ' + $store);
         checkDone = function ($e) {
-                if ((added.length + failed.length) === ii) {
+            if ((added.length + failed.length) === ii) {
                 __call($opts.error, _self, [added, failed, $e]);
             }
         };
@@ -220,7 +221,7 @@ function DB ($options) {
             request;
         __assert(trans, 'Could not get Transaction deleting ' + $id + ' from ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get objectStore deleting ' + $id + ' from ' + $store);
+        __assert(objectStore, 'Could not get ObjectStore deleting ' + $id + ' from ' + $store);
         request = objectStore.delete($id);
         request.onsuccess = function ($e) {
             __call($opts.success, _self, [$id, $e]);
@@ -247,7 +248,7 @@ function DB ($options) {
             request;
         __assert(trans, 'Could not get Transaction getting ' + $id + ' from ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get objectStore getting ' + $id + ' from ' + $store);
+        __assert(objectStore, 'Could not get ObjectStore getting ' + $id + ' from ' + $store);
         request = objectStore.get($id);
         request.onsuccess = function ($e) {
             __call($opts.success, _self, [request.result, $store, $e]);
@@ -274,7 +275,7 @@ function DB ($options) {
             data = [];
         __assert(trans, 'Could not get Transaction getting all from ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get objectStore getting all from ' + $store);
+        __assert(objectStore, 'Could not get ObjectStore getting all from ' + $store);
         request = objectStore.openCursor();
         request.onsuccess = function ($e) {
             cursor = $e.target.result;
@@ -319,7 +320,7 @@ function DB ($options) {
             data = [];
         __assert(trans, 'Could not get Transaction filtering ' + $key + ' for ' + $value + ' from ' + $store);
         objectStore = trans.objectStore(store);
-        __assert(objectStore, 'Could not get objectStore filtering ' + $key + ' for ' + $value + ' from ' + $store);
+        __assert(objectStore, 'Could not get ObjectStore filtering ' + $key + ' for ' + $value + ' from ' + $store);
         index = objectStore.index($key);
         keyRange = IDBKeyRange.only($value);
         request = index.openCursor(keyRange);
@@ -365,7 +366,7 @@ function DB ($options) {
             request;
         __assert(trans, 'Could not get Transaction clearing ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get objectStore clearing ' + $store);
+        __assert(objectStore, 'Could not get ObjectStore clearing ' + $store);
         request = objectStore.clear();
         request.onsuccess = function ($e) {
             __call($opts.success, _self, [$store, $e]);
@@ -397,7 +398,7 @@ function DB ($options) {
             keyRange;
         __assert(trans, 'Could not get Transaction counting ' + $store);
         objectStore = trans.objectStore($store);
-        __assert(objectStore, 'Could not get objectStore counting ' + $store);
+        __assert(objectStore, 'Could not get ObjectStore counting ' + $store);
         if ($key && $value) {
             index = objectStore.index($key);
             keyRange = IDBKeyRange.only($value);
