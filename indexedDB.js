@@ -8,7 +8,7 @@
  *        error: <function>
  *     }
  */
-function DB ($options){
+function DB ($options) {
     var self = this,
         // private polyfils
         indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB,
@@ -182,7 +182,7 @@ function DB ($options){
         __assert(trans, 'Error inserting to ' + $store);
         objectStore = trans.objectStore($store);
         __assert(objectStore, 'Could not get object store ' + $store);
-        checkDone = function () {
+        checkDone = function ($e) {
                 if ((added.length + failed.length) === ii) {
                 __call($opts.error, _self, [added, failed, $e]);
             }
@@ -192,16 +192,16 @@ function DB ($options){
                 request = ($repl) ? objectStore.put($row) : objectStore.add($row);
             } catch ($err) {
                 failed.push($row);
-                checkDone();
+                checkDone({});
             }
             if (request) {
                 request.onsuccess = function ($e) { 
                     added.push($row);
-                    checkDone();
+                    checkDone($e);
                 };
                 request.onerror = function ($e) { 
                     failed.push($row);
-                    checkDone();
+                    checkDone($e);
                 };
             }
         };
