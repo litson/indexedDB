@@ -148,7 +148,7 @@ function DB ($options) {
                                 objectStore.createIndex(index.name, index.field, { 
                                     unique:  !!(index.unique)
                                 });
-                            } catch ($err) { __log($err.message): }
+                            } catch ($err) { __log($err.message); }
                         }
                         __call($options.upgrade, self, [$e]);
                     }
