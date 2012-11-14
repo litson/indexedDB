@@ -341,7 +341,7 @@ function DB ($options) {
                 if ($order && $orderCol) {
                     data.sort(function (a, b) {
                         var aa = a[$orderCol],
-                                bb = b[$orderCol];
+                            bb = b[$orderCol];
                         return (aa < bb) ? -1 : ((aa > bb) ? 1 : 0);
                     });
                     if ($order === 'desc') { 
