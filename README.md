@@ -66,8 +66,8 @@ See full example at the bottom
     db.insert({
         store: 'animals',
         data: data,
-        success: function (rowsAdded, rowsFailed, successEvent) { /* success */ },
-        error: function (rowsAdded, rowsFailed, failEvent) { /* error */ }
+        success: function (rowsAdded, rowsFailed, objectStore, successEvent) { /* success */ },
+        error: function (rowsAdded, rowsFailed, objectStore, failEvent) { /* error */ }
     });
 
 ###Deleting###
@@ -79,16 +79,16 @@ Delete record with id = 7
     db.delete({
         store: 'animals', 
         id: 7,
-        success: function (deletedID, successEvent) { /* deleted */ },
-        error: function (failEvent) { /* error */ }
+        success: function (deletedID, objectStore, successEvent) { /* deleted */ },
+        error: function (objectStore, failEvent) { /* error */ }
     });
 
 ####Delete all rows in object store####
 
     db.clear({
         store: 'animals',
-        success: function (successEvent) { /* deleted all records */ },
-        error: function (failEvent) { /* error */ }
+        success: function (objectStore, successEvent) { /* deleted all records */ },
+        error: function (objectStore, failEvent) { /* error */ }
     });
 
 ###Fetching###
@@ -100,16 +100,16 @@ Get record with id = 5
     db.get({
         store: 'animals', 
         id: 5,
-        success: function (data, successEvent) { /* {id: 5, name: 'whale', class: 'mammalia'} */ },
-        error: function (failEvent) { /* error */ }
+        success: function (data, objectStore, successEvent) { /* {id: 5, name: 'whale', class: 'mammalia'} */ },
+        error: function (objectStore, failEvent) { /* error */ }
     });
 
 ####Get all records in an object store####
 
     db.all({
         store: 'animals',
-        success: function (data, successEvent) { /* Array all records in animals */ },
-        error: function (failEvent) { /* error */ }
+        success: function (data, objectStore, successEvent) { /* Array all records in animals */ },
+        error: function (objectStore, failEvent) { /* error */ }
     });
 
 ####Filtering and ordering data####
@@ -123,8 +123,8 @@ Get all animals from class 'mammilia' in ascending order (column of ordering is 
         orderCol: 'name', 
         order: 'asc', 
         limit: 3,
-        success: function (data, successEvent) { /* first 3 animal with class mammilia in asc order by name */ },
-        error: function (failEvent) { /* error */ }
+        success: function (data, objectStore, successEvent) { /* first 3 animal with class mammilia in asc order by name */ },
+        error: function (objectStore, failEvent) { /* error */ }
     });
 
 ###Counting records###
@@ -133,16 +133,16 @@ OptionalKey will constrain result to items matching that key at value optionalKe
 
     db.count({
         store: 'animals',
-        success: function (count, successEvent) { /* total number of records */ },
-        error: function (failEvent) { /* error */ }
+        success: function (count, objectStore, successEvent) { /* total number of records */ },
+        error: function (objectStore, failEvent) { /* error */ }
     });
     
     db.count({
         store: 'animals',
         key: 'class',
         value: 'mammilia',
-        success: function (count, successEvent) { /* total number of records with class 'mammilia' */ },
-        error: function (failEvent) { /* error */ }
+        success: function (count, objectStore, successEvent) { /* total number of records with class 'mammilia' */ },
+        error: function (objectStore, failEvent) { /* error */ }
     });
 
 
