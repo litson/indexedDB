@@ -51,7 +51,7 @@ function DB ($options){
     };
     
     __log = function ($msg) {
-        if (debug && console && console.log) {  console.log.apply($msg);  }
+        if (debug && console && console.log) {  console.log($msg);  }
     };
     
     __getTransaction = function ($db, $store, $rw) {
