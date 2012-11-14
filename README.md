@@ -383,7 +383,7 @@ Full Example
             db = DBObject;
             doStuff();
         },
-        error: function (success, e) {
+        error: function (support, e) {
             console.log('error initing db');
         }
     });
