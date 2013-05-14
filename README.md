@@ -371,7 +371,7 @@ Full Example
     var IDB = new DB({
         name: 'dbname',
         version: 1,
-        schema: dbSchema
+        schema: dbSchema,
         success: function (DBObject) {
             db = DBObject;
             doStuff();
