@@ -32,6 +32,10 @@ function DB ($options) {
         DBObject,
         // exception
         IndexedDBException;
+        
+    // 'update' API need 'get' API open the transaction 'readwrite' option;
+    // use closure to protect variable '_updatingFlag' can't be changed;
+    var _updatingFlag = false;
 
     // Exception
     IndexedDBException = function (message) { 
@@ -251,7 +255,7 @@ function DB ($options) {
         var _self = this,
             $store = $opts.store,
             $id = $opts.id,
-            trans = __getTransaction(this.db, $store),
+            trans = __getTransaction(this.db, $store, _updatingFlag),
             objectStore,
             request;
         __assert(trans, 'Could not get Transaction getting ' + $id + ' from ' + $store);
@@ -259,7 +263,7 @@ function DB ($options) {
         __assert(objectStore, 'Could not get ObjectStore getting ' + $id + ' from ' + $store);
         request = objectStore.get($id);
         request.onsuccess = function ($e) {
-            __call($opts.success, _self, [request.result, $store, $e]);
+            __call($opts.success, _self, [request.result, $store, $e, objectStore]);
         };
         request.onerror = function ($e) {
             __call($opts.error, _self, [$id, $store, $e]);
@@ -420,5 +424,40 @@ function DB ($options) {
         request.onerror = function (e) {
             __call($opts.error, _self, [$store, $e]);
         };
+    };
+    
+        /**
+     *    @params <object> {
+     *         store: <string>,
+     *         id: <mixed>,
+     *         data: <object>,
+     *         success: <function>,
+     *         error: <function>
+     *     }
+     */
+    DBObject.prototype.update = function($opts) {
+        var _self = this,
+            _data = $opts.data;
+        _updatingFlag = true;
+        _self.get({
+            id: $opts.id,
+            store: $opts.store,
+            success: function(data, storeName, successEvent, objectStore) {
+                var key;
+                for (key in data) {
+                    data[key] = (typeof _data[key] !== 'undefined') ? _data[key] : data[key];
+                }
+                objectStore.put(data);
+                __call($opts.success, _self, [data, $e]);
+                // set _updatingFlag to false again;
+                _updatingFlag = false;
+            },
+            error: function(objectStore, failEvent) {
+                // _debug && console && console.log && console.apply(console, ['Update failed', objectStore, failEvent]);
+                __call($opts.error, _self, [$id, $store, $e]);
+                // set _updatingFlag to false again;
+                _updatingFlag = false;
+            }
+        });
     };
 };
