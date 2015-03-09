@@ -437,24 +437,28 @@ function DB ($options) {
      */
     DBObject.prototype.update = function($opts) {
         var _self = this,
-            _data = $opts.data;
+            $id = $opts.id,
+            $store = $opts.store,
+            $data = $opts.data;
+
         _updatingFlag = true;
+
         _self.get({
-            id: $opts.id,
-            store: $opts.store,
+            id: $id,
+            store: $store,
             success: function(data, storeName, successEvent, objectStore) {
                 var key;
                 for (key in data) {
-                    data[key] = (typeof _data[key] !== 'undefined') ? _data[key] : data[key];
+                    data[key] = (typeof $data[key] !== 'undefined') ? $data[key] : data[key];
                 }
                 objectStore.put(data);
-                __call($opts.success, _self, [data, $e]);
+                __call($opts.success, _self, [data, successEvent]);
                 // set _updatingFlag to false again;
                 _updatingFlag = false;
             },
             error: function(objectStore, failEvent) {
                 // _debug && console && console.log && console.apply(console, ['Update failed', objectStore, failEvent]);
-                __call($opts.error, _self, [$id, $store, $e]);
+                __call($opts.error, _self, [$id, $store, failEvent]);
                 // set _updatingFlag to false again;
                 _updatingFlag = false;
             }
